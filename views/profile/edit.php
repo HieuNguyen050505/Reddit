@@ -3,7 +3,7 @@
     <form method="POST" enctype="multipart/form-data" class="space-y-4">
         <div class="flex items-center space-x-2">
             <img id="avatar" class="w-14 h-14 rounded-full ring-2 ring-gray-300 dark:ring-gray-500 object-cover" src="<?php echo htmlspecialchars($user['avatar_path'] ?: '/assets/avatar_default.png'); ?>" alt="Bordered avatar">
-            <input accept="image/*" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" name="avatar" type="file" onchange="previewImage(event)">
+            <input accept="image/*" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" name="avatar" type="file">
         </div>
         <div>
             <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
@@ -68,14 +68,5 @@
     </div>
 </div>
 
-<!-- Image Preview Script -->
-<script>
-function previewImage(event) {
-    const reader = new FileReader();
-    reader.onload = function() {
-        const output = document.getElementById('avatar');
-        output.src = reader.result;
-    }
-    reader.readAsDataURL(event.target.files[0]);
-}
-</script>
+<!-- Include the profile image JavaScript file -->
+<script src="/reddit/public/js/profile-image.js"></script>

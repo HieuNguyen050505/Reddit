@@ -84,11 +84,4 @@
     </div>
 </div>
 
-<script>
-function toggleEditForm(moduleId) {
-    const form = document.querySelector(`.edit-form-${moduleId}`);
-    const name = document.querySelector(`.module-name-${moduleId}`);
-    form.classList.toggle('hidden');
-    name.classList.toggle('hidden');
-}
-</script>
+<script src="/reddit/public/js/module-management.js"></script>

@@ -97,79 +97,11 @@
     </div>
 
     <!-- Snackbar Component -->
-    <div id="snackbar" class="fixed hidden bottom-4 right-4 flex items-center w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800 z-50 transition-all duration-300 ease-in-out" role="alert">
-        <div id="snackbar-icon" class="flex-shrink-0 inline-flex items-center justify-center w-10 h-10 rounded-lg"></div>
-        <div id="snackbar-message" class="ml-3 flex-grow text-sm font-medium break-words"></div>
-        <button type="button" id="snackbar-close" class="ml-2 flex-shrink-0 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" aria-label="Close">
-            <span class="sr-only">Close</span>
-            <?php include "public/icons/snackbar-close.svg"; ?>
-        </button>
-    </div>
+    <?php include "views/components/snackbar.php"; ?>
 
     <main class="ps-[17rem] pt-[3.5rem] me-4"><?php echo $content; ?></main>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
-    <script>
-        function showSnackbar(message, type) {
-            const snackbar = document.getElementById('snackbar');
-            const messageElement = document.getElementById('snackbar-message');
-            const iconElement = document.getElementById('snackbar-icon');
-            const closeButton = document.getElementById('snackbar-close');
-
-            messageElement.textContent = message;
-
-            if (type === 'success') {
-                iconElement.innerHTML = `<?php include "public/icons/snackbar-success.svg"; ?>`;
-                iconElement.className = 'flex-shrink-0 inline-flex items-center justify-center w-10 h-10 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200';
-                snackbar.className = snackbar.className.replace(/bg-.*?(?:\s|$)/g, '') + ' bg-white dark:bg-gray-800 border-l-4 border-green-500';
-            } else if (type === 'error') {
-                iconElement.innerHTML = `<?php include "public/icons/snackbar-error.svg"; ?>`;
-                iconElement.className = 'flex-shrink-0 inline-flex items-center justify-center w-10 h-10 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200';
-                snackbar.className = snackbar.className.replace(/bg-.*?(?:\s|$)/g, '') + ' bg-white dark:bg-gray-800 border-l-4 border-red-500';
-            } else if (type === 'warning') {
-                iconElement.innerHTML = `<?php include "public/icons/snackbar-warning.svg"; ?>`;
-                iconElement.className = 'flex-shrink-0 inline-flex items-center justify-center w-10 h-10 text-yellow-500 bg-yellow-100 rounded-lg dark:bg-yellow-800 dark:text-yellow-200';
-                snackbar.className = snackbar.className.replace(/bg-.*?(?:\s|$)/g, '') + ' bg-white dark:bg-gray-800 border-l-4 border-yellow-500';
-            } else if (type === 'info') {
-                iconElement.innerHTML = `<?php include "public/icons/snackbar-info.svg"; ?>`;
-                iconElement.className = 'flex-shrink-0 inline-flex items-center justify-center w-10 h-10 text-blue-500 bg-blue-100 rounded-lg dark:bg-blue-800 dark:text-blue-200';
-                snackbar.className = snackbar.className.replace(/bg-.*?(?:\s|$)/g, '') + ' bg-white dark:bg-gray-800 border-l-4 border-blue-500';
-            }
-
-            snackbar.classList.remove('hidden');
-            snackbar.classList.add('flex');
-            snackbar.classList.add('opacity-0');
-            setTimeout(() => {
-                snackbar.classList.remove('opacity-0');
-                snackbar.classList.add('opacity-100');
-            }, 10);
-
-            closeButton.onclick = () => hideSnackbar();
-
-            const timeoutId = setTimeout(() => hideSnackbar(), 4000);
-            snackbar.dataset.timeoutId = timeoutId;
-
-            function hideSnackbar() {
-                snackbar.classList.remove('opacity-100');
-                snackbar.classList.add('opacity-0');
-                setTimeout(() => {
-                    snackbar.classList.add('hidden');
-                    snackbar.classList.remove('flex', 'opacity-0');
-                }, 300);
-                
-                if (snackbar.dataset.timeoutId) {
-                    clearTimeout(parseInt(snackbar.dataset.timeoutId));
-                    delete snackbar.dataset.timeoutId;
-                }
-            }
-        }
-
-        <?php if (isset($_SESSION['snackbar_message']) && isset($_SESSION['snackbar_type'])): ?>
-            document.addEventListener("DOMContentLoaded", () => {
-                showSnackbar("<?php echo addslashes($_SESSION['snackbar_message']); ?>", "<?php echo $_SESSION['snackbar_type']; ?>");
-            });
-            <?php unset($_SESSION['snackbar_message'], $_SESSION['snackbar_type']); ?>
-        <?php endif; ?>
-    </script>
+    <script src="/reddit/public/js/snackbar.js"></script>
 </body>
 </html>

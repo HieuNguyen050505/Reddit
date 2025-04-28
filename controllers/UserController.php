@@ -40,7 +40,6 @@ class UserController extends BaseController {
                 }
             }
         }
-        $this->view('user/add', ['title' => 'Add User']);
     }
 
     public function editUsername($id) {
@@ -65,7 +64,6 @@ class UserController extends BaseController {
                 }
             }
         }
-        $this->view('user/edit_username', ['title' => 'Edit Username', 'user' => $user]);
     }
 
     public function editEmail($id) {
@@ -89,7 +87,6 @@ class UserController extends BaseController {
                 }
             }
         }
-        $this->view('user/edit_email', ['title' => 'Edit Email', 'user' => $user]);
     }
 
     public function delete($id) {

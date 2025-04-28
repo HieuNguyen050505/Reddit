@@ -1,6 +1,3 @@
-<?php
-// views/users/index.php
-?>
 <div class="my-7 w-full bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
     <div class="p-5 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
         <h2 class="text-xl font-bold text-gray-900 dark:text-white">User List</h2>
@@ -139,18 +136,4 @@
     </div>
 </div>
 
-<script>
-function toggleEditUsernameForm(userId) {
-    const form = document.querySelector(`.edit-username-form-${userId}`);
-    const name = document.querySelector(`.username-${userId}`);
-    form.classList.toggle('hidden');
-    name.classList.toggle('hidden');
-}
-
-function toggleEditEmailForm(userId) {
-    const form = document.querySelector(`.edit-email-form-${userId}`);
-    const email = document.querySelector(`.email-${userId}`);
-    form.classList.toggle('hidden');
-    email.classList.toggle('hidden');
-}
-</script>
+<script src="/reddit/public/js/user-management.js"></script>

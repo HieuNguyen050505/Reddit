@@ -1,57 +1,10 @@
 <?php
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-use Dotenv\Dotenv;
-
 class ContactController extends BaseController {
     private $userModel;
-    private $mailer;
 
     public function __construct($pdo) {
         parent::__construct($pdo);
         $this->userModel = new User($pdo);
-
-        // Load environment variables
-        $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
-        $dotenv->load();
-
-        // Initialize PHPMailer
-        $this->mailer = new PHPMailer(true);
-    }
-
-    private function configureMailer($fromEmail, $fromName, $toEmail, $subject, $htmlBody, $altBody, $replyToEmail = null, $replyToName = null) {
-        try {
-            // SMTP configuration from .env
-            $this->mailer->isSMTP();
-            $this->mailer->Host = $_ENV['SMTP_HOST'];
-            $this->mailer->SMTPAuth = true;
-            $this->mailer->Username = $_ENV['SMTP_USERNAME'];
-            $this->mailer->Password = $_ENV['SMTP_PASSWORD'];
-            $this->mailer->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-            $this->mailer->Port = $_ENV['SMTP_PORT'];
-
-            // Clear previous recipients
-            $this->mailer->clearAddresses();
-            $this->mailer->clearReplyTos();
-
-            // Set email details
-            $this->mailer->setFrom($fromEmail, $fromName);
-            $this->mailer->addAddress($toEmail);
-            if ($replyToEmail) {
-                $this->mailer->addReplyTo($replyToEmail, $replyToName ?: $fromName);
-            }
-
-            $this->mailer->isHTML(true);
-            $this->mailer->Subject = $subject;
-            $this->mailer->Body = $htmlBody;
-            $this->mailer->AltBody = $altBody;
-
-            // Send the email
-            $this->mailer->send();
-            return true;
-        } catch (Exception $e) {
-            $this->setSnackbar("Failed to send email" , "error");
-        }
     }
 
     public function index() {

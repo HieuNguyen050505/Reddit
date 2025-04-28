@@ -75,7 +75,7 @@ class ProfileController extends BaseController {
         }
 
         if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] == 0) {
-            $avatar_path = $this->uploadAvatar($user_id);
+            $avatar_path = $this->uploadImage('avatar', 'studentq/avatars', $user_id . '_' . time());
             if (!$avatar_path) {
                 $this->setSnackbar('Failed to upload avatar.', 'error');
                 return;
@@ -110,19 +110,6 @@ class ProfileController extends BaseController {
             $errors[] = 'Email is already in use';
         }
         return $errors;
-    }
-
-    private function uploadAvatar($user_id) {
-        try {
-            $upload = new \Cloudinary\Api\Upload\UploadApi();
-            $result = $upload->upload($_FILES['avatar']['tmp_name'], [
-                'folder' => 'studentq/avatars',
-                'public_id' => $user_id . '_' . time()
-            ]);
-            return $result['secure_url'];
-        } catch (\Exception $e) {
-            return null;
-        }
     }
 }
 ?>

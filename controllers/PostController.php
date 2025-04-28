@@ -1,6 +1,4 @@
 <?php
-use Cloudinary\Api\Upload\UploadApi;
-
 class PostController extends BaseController {
     private $postModel;
     private $moduleModel;
@@ -38,12 +36,11 @@ class PostController extends BaseController {
                 $this->setSnackbar('Please select a valid module', 'error');
             } else {
                 if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-                    $upload = new UploadApi();
-                    $result = $upload->upload($_FILES['image']['tmp_name'], [
-                        'folder' => 'studentq/posts',
-                        'public_id' => time() . '_' . basename($_FILES['image']['name'])
-                    ]);
-                    $image_path = $result['secure_url'];
+                    $image_path = $this->uploadImage('image', 'studentq/posts');
+                    if (!$image_path) {
+                        $this->setSnackbar('Failed to upload image.', 'error');
+                        return;
+                    }
                 }
                 $data = [
                     'title' => $title,
@@ -61,7 +58,7 @@ class PostController extends BaseController {
             }
         }
 
-        $this->view('post/create', ['title' => 'Add Question', 'modules' => $modules]);
+        $this->view('post/form', ['title' => 'Add Question', 'modules' => $modules]);
     }
 
     public function index($module_id = null, $post_id = null) {
@@ -123,12 +120,12 @@ class PostController extends BaseController {
             ];
 
             if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-                $upload = new UploadApi();
-                $result = $upload->upload($_FILES['image']['tmp_name'], [
-                    'folder' => 'studentq/posts',
-                    'public_id' => time() . '_' . basename($_FILES['image']['name'])
-                ]);
-                $data['image_path'] = $result['secure_url'];
+                $image_path = $this->uploadImage('image', 'studentq/posts');
+                if ($image_path) {
+                    $data['image_path'] = $image_path;
+                } else {
+                    $this->setSnackbar('Failed to upload image.', 'error');
+                }
             }
 
             if ($this->postModel->update($id, $data)) {
@@ -140,7 +137,7 @@ class PostController extends BaseController {
         }
 
         $modules = $this->moduleModel->getAll();
-        $this->view('post/edit', [
+        $this->view('post/form', [
             'title' => 'Edit Question',
             'post' => $post,
             'modules' => $modules

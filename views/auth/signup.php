@@ -17,4 +17,3 @@
     <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-full text-sm px-4 py-2 md:px-5 md:py-3 dark:bg-[#d93900] dark:hover:bg-[#ae2c00]">Submit</button>
     <p class="dark:text-[#abc1ca] text-sm my-6">Already a redditor? <a href="/reddit/login" class="text-[#5b80e0]">Login</a></p>
 </form>
-<script src="/js/validation_signup.js"></script>
