@@ -1,4 +1,7 @@
 <?php
+// Set default timezone to UTC
+date_default_timezone_set('UTC');
+
 // Start session
 session_start();
 require_once 'vendor/autoload.php';

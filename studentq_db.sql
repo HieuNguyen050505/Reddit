@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 28, 2025 at 05:28 PM
+-- Generation Time: Apr 29, 2025 at 06:45 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -34,6 +34,16 @@ CREATE TABLE `comments` (
   `content` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`comment_id`, `post_id`, `user_id`, `content`, `created_at`) VALUES
+(8, 14, 1, 'hehehe', '2025-04-28 17:32:02'),
+(9, 15, 2, 'troll', '2025-04-29 15:17:31'),
+(10, 15, 2, 'troll', '2025-04-29 15:17:35'),
+(12, 3, 1, 'hehehe', '2025-04-29 16:42:06');
 
 -- --------------------------------------------------------
 
@@ -88,7 +98,10 @@ INSERT INTO `posts` (`post_id`, `title`, `content`, `image_path`, `user_id`, `mo
 (10, 'Test Title', 'fsdfsdfsdf', 'https://res.cloudinary.com/dwczo5jpk/image/upload/v1745431340/studentq/posts/1745431334_Screenshot%202024-06-15%20091259.png.png', 1, 8, '2025-04-23 18:02:21'),
 (11, 'Test Title', 'test test test test', 'https://res.cloudinary.com/dwczo5jpk/image/upload/v1745650686/studentq/posts/1745650681_Screenshot%202024-05-31%20224613.png.png', 1, 7, '2025-04-26 06:58:05'),
 (12, 'Consequuntur volupta', 'Eaque laborum Saepe', 'https://res.cloudinary.com/dwczo5jpk/image/upload/v1745750463/studentq/posts/1745750459_istockphoto-1324356458-612x612.jpg.jpg', 2, 3, '2025-04-27 10:41:01'),
-(13, 'Totam quo vero sint ', 'Culpa voluptatem N', 'https://res.cloudinary.com/dwczo5jpk/image/upload/v1745765002/studentq/posts/1745764998_Navigation_structure.png.png', 2, 8, '2025-04-27 14:43:20');
+(13, 'Totam quo vero sint ', 'Culpa voluptatem N', 'https://res.cloudinary.com/dwczo5jpk/image/upload/v1745765002/studentq/posts/1745764998_Navigation_structure.png.png', 2, 8, '2025-04-27 14:43:20'),
+(14, 'Mollitia aut eligend', 'Molestiae dolorum vea', 'https://res.cloudinary.com/dwczo5jpk/image/upload/v1745859532/studentq/posts/1745859525_Greenwich.jpg.jpg', 2, 4, '2025-04-28 16:58:48'),
+(15, 'Neque eos voluptate', 'Quia reiciendis exera', 'https://res.cloudinary.com/dwczo5jpk/image/upload/v1745861191/studentq/posts/1745861185_image.svg.svg', 1, 2, '2025-04-28 17:19:56'),
+(16, 'Soluta non mollit et', 'Rerum error omnis su', 'https://res.cloudinary.com/dwczo5jpk/image/upload/v1745941863/studentq/posts/1745941861_Screenshot%202024-05-10%20155659.png.png', 2, 8, '2025-04-29 15:51:03');
 
 -- --------------------------------------------------------
 
@@ -112,9 +125,9 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `is_admin`, `avatar_path`, `bio`) VALUES
 (1, 'admin', 'nguyendinhhieu050505@gmail.com', '$2y$10$yTks2m.6GcWN0URA25pDu.L4LroIvm0XjJArC56zPu4wP4nEHayi.', 1, 'https://res.cloudinary.com/dwczo5jpk/image/upload/v1745653889/studentq/avatars/1_1745653884.webp', ''),
-(2, 'HieuCuteDangYeu', 'student@email.com', '$2y$10$ztp6erylme3CSF8eU./mLeepnmJc3jqyMuwCnOpMDP5EsdyGQW.Xy', 0, 'https://res.cloudinary.com/dwczo5jpk/image/upload/v1741024126/studentq/avatars/2_1741024123.png', 'hihihihi'),
-(7, 'HieuCuBu', 'student1@email.com', '$2y$10$X.hlBlTxiUpjVpMk69O2FOlAB5WeSODbgwWV.oeL870hVqGPDMpiG', 0, 'https://res.cloudinary.com/dwczo5jpk/image/upload/v1741024126/studentq/avatars/2_1741024123.png', NULL),
-(10, 'refomada', 'zymokyloko@mailinator.com', '$2y$10$adalLEbxWETwjv12hrglt.dlOCWC.2tj6A6okonL1CIigfGq7H.t.', 0, 'https://res.cloudinary.com/dwczo5jpk/image/upload/v1741024126/studentq/avatars/2_1741024123.png', NULL),
+(2, 'HieuCuteDangYeu', 'student@email.com', '$2y$10$ztp6erylme3CSF8eU./mLeepnmJc3jqyMuwCnOpMDP5EsdyGQW.Xy', 0, 'https://res.cloudinary.com/dwczo5jpk/image/upload/v1745943436/studentq/avatars/1745943434_.png', 'hihihihi'),
+(7, 'qajavisyji', 'student1@email.com', '$2y$10$X.hlBlTxiUpjVpMk69O2FOlAB5WeSODbgwWV.oeL870hVqGPDMpiG', 0, 'https://res.cloudinary.com/dwczo5jpk/image/upload/v1741024126/studentq/avatars/2_1741024123.png', NULL),
+(10, 'refomadaa', 'zymokyloko@mailinator.com', '$2y$10$adalLEbxWETwjv12hrglt.dlOCWC.2tj6A6okonL1CIigfGq7H.t.', 0, 'https://res.cloudinary.com/dwczo5jpk/image/upload/v1741024126/studentq/avatars/2_1741024123.png', NULL),
 (11, 'pydulaxacu', 'tawag@mailinator.com', '$2y$10$K78uPLiYOl27xhZAtxoEIe2dcIz4UA.qpN5mAodEoZ4uBTRwz667K', 0, 'https://res.cloudinary.com/dwczo5jpk/image/upload/v1741024126/studentq/avatars/2_1741024123.png', NULL);
 
 -- --------------------------------------------------------
@@ -139,13 +152,14 @@ INSERT INTO `votes` (`vote_id`, `post_id`, `user_id`, `vote_type`, `created_at`)
 (3, 1, 2, 'up', '2025-03-19 06:11:42'),
 (4, 3, 2, 'up', '2025-03-19 06:17:20'),
 (50, 3, 1, 'up', '2025-04-02 12:53:56'),
-(51, 1, 1, 'up', '2025-04-02 12:54:01'),
+(51, 1, 1, 'down', '2025-04-02 12:54:01'),
 (62, 9, 1, 'up', '2025-04-23 10:12:16'),
 (63, 10, 1, 'up', '2025-04-23 18:20:14'),
 (67, 10, 2, 'down', '2025-04-25 20:47:34'),
 (69, 11, 1, 'up', '2025-04-26 07:11:35'),
 (70, 12, 2, 'up', '2025-04-27 14:48:01'),
-(72, 13, 1, 'up', '2025-04-28 11:04:36');
+(72, 13, 1, 'up', '2025-04-28 11:04:36'),
+(73, 15, 1, 'up', '2025-04-28 17:28:58');
 
 --
 -- Indexes for dumped tables
@@ -198,7 +212,7 @@ ALTER TABLE `votes`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `modules`
@@ -210,7 +224,7 @@ ALTER TABLE `modules`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -222,7 +236,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `votes`
 --
 ALTER TABLE `votes`
-  MODIFY `vote_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `vote_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- Constraints for dumped tables
