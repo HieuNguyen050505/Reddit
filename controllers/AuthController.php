@@ -4,14 +4,10 @@ class AuthController extends BaseController {
 
     public function __construct($pdo) {
         parent::__construct($pdo);
-        $this->userModel = new User($pdo);
+        $this->userModel = $this->loadModel('User');
     }
 
     public function login() {
-        if ($this->isLoggedIn()) {
-            $this->redirect('');
-        }
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
             $password = $_POST['password'] ?? '';

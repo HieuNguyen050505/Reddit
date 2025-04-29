@@ -4,14 +4,10 @@ class ContactController extends BaseController {
 
     public function __construct($pdo) {
         parent::__construct($pdo);
-        $this->userModel = new User($pdo);
+        $this->userModel = $this->loadModel('User');
     }
 
     public function index() {
-        if (!$this->isLoggedIn() || $this->isAdmin()) {
-            $this->redirect('login');
-        }
-
         $name = '';
         $email = '';
         $message = '';

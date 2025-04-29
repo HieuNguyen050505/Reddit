@@ -4,12 +4,10 @@ class CommentController extends BaseController {
 
     public function __construct($pdo) {
         parent::__construct($pdo);
-        $this->commentModel = new Comment($pdo);
+        $this->commentModel = $this->loadModel('Comment');
     }
 
     public function add() {
-        if (!$this->isLoggedIn()) $this->redirect('login');
-
         $post_id = (int)$_POST['post_id'];
         $content = trim($_POST['content']);
         $user_id = $_SESSION['user_id'];
@@ -23,8 +21,6 @@ class CommentController extends BaseController {
     }
 
     public function edit() {
-        if (!$this->isLoggedIn()) $this->redirect('login');
-    
         $id = $_POST['comment_id']; // Get comment_id from form
         $comment = $this->commentModel->getById($id);
         if (!$comment || ($comment['user_id'] != $_SESSION['user_id'] && !$this->isAdmin())) {
@@ -43,8 +39,6 @@ class CommentController extends BaseController {
     }
 
     public function delete($id) {
-        if (!$this->isLoggedIn()) $this->redirect('login');
-
         $comment = $this->commentModel->getById($id);
         if (!$comment || ($comment['user_id'] != $_SESSION['user_id'] && !$this->isAdmin())) {
             $this->setSnackbar('Comment not found or you are not authorized to delete it', 'error');

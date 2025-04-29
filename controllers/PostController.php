@@ -6,17 +6,12 @@ class PostController extends BaseController {
 
     public function __construct($pdo) {
         parent::__construct($pdo);
-        $this->postModel = new Post($pdo);
-        $this->moduleModel = new Module($pdo);
-        $this->commentModel = new Comment($pdo);
+        $this->postModel = $this->loadModel('Post');
+        $this->moduleModel = $this->loadModel('Module');
+        $this->commentModel = $this->loadModel('Comment');
     }
 
     public function create() {
-        if (!$this->isLoggedIn()) {
-            $this->setSnackbar('Please log in to add a post', 'error');
-            $this->redirect('login');
-        }
-
         $modules = $this->moduleModel->getAll();
         if (empty($modules)) {
             $this->setSnackbar('No modules available to post in', 'info');
@@ -100,11 +95,6 @@ class PostController extends BaseController {
     }
 
     public function edit($id) {
-        if (!$this->isLoggedIn()) {
-            $this->setSnackbar('Please log in to edit a post', 'error');
-            $this->redirect('login');
-        }
-
         $post = $this->postModel->getById($id);
         if (!$post || ($post['user_id'] != $_SESSION['user_id'] && !$this->isAdmin())) {
             $this->setSnackbar('Post not found or you are not authorized to edit it', 'error');
@@ -145,11 +135,6 @@ class PostController extends BaseController {
     }
 
     public function delete($id) {
-        if (!$this->isLoggedIn()) {
-            $this->setSnackbar('Please log in to delete a post', 'error');
-            $this->redirect('login');
-        }
-
         $post = $this->postModel->getById($id);
         if (!$post || ($post['user_id'] != $_SESSION['user_id'] && !$this->isAdmin())) {
             $this->setSnackbar('Post not found or you are not authorized to delete it', 'error');

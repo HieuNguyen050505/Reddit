@@ -4,12 +4,12 @@ class VoteController extends BaseController {
 
     public function __construct($pdo) {
         parent::__construct($pdo);
-        $this->voteModel = new Vote($pdo);
+        $this->voteModel = $this->loadModel('Vote');
     }
 
     public function index() {
-        if (!$this->isLoggedIn() || $_SERVER['REQUEST_METHOD'] !== 'POST') {
-            echo json_encode(['success' => false, 'error' => 'Unauthorized or invalid request']);
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            echo json_encode(['success' => false, 'error' => 'Invalid request method']);
             exit;
         }
 
@@ -39,12 +39,8 @@ class VoteController extends BaseController {
     }
 
     public function status($post_id) {
-        if (!$this->isLoggedIn()) {
-            echo json_encode(['user_vote' => null]);
-            exit;
-        }
-
-        $user_id = $_SESSION['user_id'];
+        // Check if user is logged in before accessing session variable
+        $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
         $vote_type = $this->voteModel->getVoteStatus($post_id, $user_id);
         echo json_encode(['user_vote' => $vote_type]);
         exit;

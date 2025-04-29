@@ -4,15 +4,10 @@ class ModuleController extends BaseController {
 
     public function __construct($pdo) {
         parent::__construct($pdo);
-        $this->moduleModel = new Module($pdo);
+        $this->moduleModel = $this->loadModel('Module');
     }
 
     public function index() {
-        if (!$this->isAdmin()) {
-            $this->setSnackbar('You are not authorized to view this page', 'error');
-            $this->redirect('post');
-        }
-
         $modules = $this->moduleModel->getAll();
         $_SESSION['modules'] = $modules;
 
@@ -24,11 +19,6 @@ class ModuleController extends BaseController {
     }
 
     public function add() {
-        if (!$this->isAdmin()) {
-            $this->setSnackbar('You must be an admin to add modules', 'error');
-            $this->redirect('module');
-        }
-
         $name = trim($_POST['module_name'] ?? '');
         if (strlen($name) < 3) {
             $this->setSnackbar('Module name must be 3 or more characters', 'error');
@@ -43,11 +33,6 @@ class ModuleController extends BaseController {
     }
 
     public function edit($id) {
-        if (!$this->isAdmin()) {
-            $this->setSnackbar('You must be an admin to edit modules', 'error');
-            $this->redirect('module');
-        }
-
         $name = trim($_POST['module_name'] ?? '');
         if (strlen($name) < 3) {
             $this->setSnackbar('Module name must be 3 or more characters', 'error');
@@ -62,11 +47,6 @@ class ModuleController extends BaseController {
     }
 
     public function delete($id) {
-        if (!$this->isAdmin()) {
-            $this->setSnackbar('You must be an admin to delete modules', 'error');
-            $this->redirect('module');
-        }
-
         if ($this->moduleModel->delete($id)) {
             $this->setSnackbar('Module deleted successfully!', 'success');
         } else {

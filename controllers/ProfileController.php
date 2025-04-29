@@ -4,7 +4,7 @@ class ProfileController extends BaseController {
 
     public function __construct($pdo) {
         parent::__construct($pdo);
-        $this->userModel = new User($pdo);
+        $this->userModel = $this->loadModel('User');
     }
 
     public function index() {

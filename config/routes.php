@@ -4,19 +4,22 @@ return [
     '' => [
         'controller' => 'PostController',
         'action' => 'index',
-        'params' => []
+        'params' => [],
+        'middleware' => ['Guest'],
     ],
 
     '/post' => [
         'controller' => 'PostController',
         'action' => 'index',
-        'params' => []
+        'params' => [],
+        'middleware' => ['Guest']
     ],
 
     '/post/create' => [
         'controller' => 'PostController',
         'action' => 'create',
-        'params' => []
+        'params' => [],
+        'middleware' => ['Auth']
     ],
 
     '/post/edit/(\d+)' => [
@@ -24,7 +27,8 @@ return [
         'action' => 'edit',
         'params' => [
             0 => 1
-        ]
+        ],
+        'middleware' => ['Auth']
     ],
 
     '/post/delete/(\d+)' => [
@@ -32,7 +36,8 @@ return [
         'action' => 'delete',
         'params' => [
             0 => 1
-        ]
+        ],
+        'middleware' => ['Auth']
     ],
 
     '/post/(\d+)' => [
@@ -41,7 +46,8 @@ return [
         'params' => [
             0 => null, 
             1 => 1     
-        ]
+        ],
+        'middleware' => ['Guest']
     ],
 
     '/post/module/(\d+)' => [
@@ -50,13 +56,15 @@ return [
         'params' => [
             0 => 1,   
             1 => null 
-        ]
+        ],
+        'middleware' => ['Guest']
     ],
 
     '/vote' => [
         'controller' => 'VoteController',
         'action' => 'index',
-        'params' => []
+        'params' => [],
+        'middleware' => ['Auth']
     ],
 
     '/vote/status/(\d+)' => [
@@ -64,43 +72,50 @@ return [
         'action' => 'status',
         'params' => [
             0 => 1
-        ]
+        ],
+        'middleware' => ['Guest']
     ],
 
     '/contact' => [
         'controller' => 'ContactController',
         'action' => 'index',
-        'params' => []
+        'params' => [],
+        'middleware' => ['Auth', 'Student']
     ],
 
     '/logout' => [
         'controller' => 'AuthController',
         'action' => 'logout',
-        'params' => []
+        'params' => [],
+        'middleware' => ['Auth']
     ],
 
     '/login' => [
         'controller' => 'AuthController',
         'action' => 'login',
-        'params' => []
+        'params' => [],
+        'middleware' => ['Guest']
     ],
 
     '/signup' => [
         'controller' => 'AuthController',
         'action' => 'signup',
-        'params' => []
+        'params' => [],
+        'middleware' => ['Guest']
     ],
 
     '/module' => [
         'controller' => 'ModuleController',
         'action' => 'index',
-        'params' => []
+        'params' => [],
+        'middleware' => ['Auth', 'Admin']
     ],
 
     '/module/add' => [
         'controller' => 'ModuleController',
         'action' => 'add',
-        'params' => []
+        'params' => [],
+        'middleware' => ['Auth', 'Admin']
     ],
 
     '/module/edit/(\d+)' => [
@@ -108,7 +123,8 @@ return [
         'action' => 'edit',
         'params' => [
             0 => 1
-        ]
+        ],
+        'middleware' => ['Auth', 'Admin']
     ],
 
     '/module/delete/(\d+)' => [
@@ -116,19 +132,22 @@ return [
         'action' => 'delete',
         'params' => [
             0 => 1
-        ]
+        ],
+        'middleware' => ['Auth', 'Admin']
     ],
 
     '/user' => [
         'controller' => 'UserController',
         'action' => 'index',
-        'params' => []
+        'params' => [],
+        'middleware' => ['Auth', 'Admin']
     ],
 
     '/user/add' => [
         'controller' => 'UserController',
         'action' => 'add',
-        'params' => []
+        'params' => [],
+        'middleware' => ['Auth', 'Admin']
     ],
 
     '/user/edit/username/(\d+)' => [
@@ -136,7 +155,8 @@ return [
         'action' => 'editUsername',
         'params' => [
             0 => 1
-        ]
+        ],
+        'middleware' => ['Auth', 'Admin']
     ],
 
     '/user/edit/email/(\d+)' => [
@@ -144,7 +164,8 @@ return [
         'action' => 'editEmail',
         'params' => [
             0 => 1
-        ]
+        ],
+        'middleware' => ['Auth', 'Admin']
     ],
 
     'user/delete/(\d+)' => [
@@ -152,13 +173,15 @@ return [
         'action' => 'delete',
         'params' => [
             0 => 1
-        ]
+        ],
+        'middleware' => ['Auth', 'Admin']
     ],
 
     '/comment' => [
         'controller' => 'CommentController',
         'action' => 'add',
-        'params' => []
+        'params' => [],
+        'middleware' => ['Auth']
     ],
 
     '/comment/edit' => [
@@ -166,7 +189,8 @@ return [
         'action' => 'edit',
         'params' => [
             0 => 1
-        ]
+        ],
+        'middleware' => ['Auth']
     ],
 
     '/comment/delete/(\d+)' => [
@@ -174,12 +198,14 @@ return [
         'action' => 'delete',
         'params' => [
             0 => 1
-        ]
+        ],
+        'middleware' => ['Auth']
     ],
 
     '/profile' => [
         'controller' => 'ProfileController',
         'action' => 'index',
-        'params' => []
+        'params' => [],
+        'middleware' => ['Auth']
     ],
 ];

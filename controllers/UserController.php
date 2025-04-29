@@ -4,14 +4,10 @@ class UserController extends BaseController {
 
     public function __construct($pdo) {
         parent::__construct($pdo);
-        $this->userModel = new User($pdo);
+        $this->userModel = $this->loadModel('User');
     }
 
     public function index() {
-        if (!$this->isAdmin()) {
-            $this->setSnackbar('You are not authorized to view this page', 'error');
-            $this->redirect('post');
-        }
         $users = $this->userModel->getAll();
         $this->view('user/index', ['title' => 'Users', 'users' => $users]);
     }
@@ -44,8 +40,8 @@ class UserController extends BaseController {
 
     public function editUsername($id) {
         $user = $this->userModel->getById($id);
-        if (!$user || ($id != $_SESSION['user_id'] && !isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== 1)) {
-            $this->setSnackbar('User not found or you are not authorized to edit', 'error');
+        if (!$user) {
+            $this->setSnackbar('User not found', 'error');
             $this->redirect('user');
         }
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -68,8 +64,8 @@ class UserController extends BaseController {
 
     public function editEmail($id) {
         $user = $this->userModel->getById($id);
-        if (!$user || ($id != $_SESSION['user_id'] && !isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== 1)) {
-            $this->setSnackbar('User not found or you are not authorized to edit', 'error');
+        if (!$user) {
+            $this->setSnackbar('User not found', 'error');
             $this->redirect('user');
         }
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -91,17 +87,14 @@ class UserController extends BaseController {
 
     public function delete($id) {
         $user = $this->userModel->getById($id);
-        if (!$user || ($id != $_SESSION['user_id'] && !isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== 1)) {
-            $this->setSnackbar('User not found or you are not authorized to delete', 'error');
+        if (!$user) {
+            $this->setSnackbar('User not found', 'error');
             $this->redirect('user');
         }
         if ($this->userModel->delete($id)) {
             if ($id == $_SESSION['user_id']) {
                 setcookie('user_id', '', time() - 3600, '/');
-                session_unset();
                 session_destroy();
-                session_start();
-                session_regenerate_id(true);
             }
             $this->setSnackbar('User deleted successfully!', 'success');
         } else {

@@ -88,7 +88,7 @@ class User {
     }
 
     public function getAdminEmail() {
-        $stmt = $this->pdo->prepare("SELECT email FROM users WHERE is_admin = ? LIMIT 1");
+        $stmt = $this->pdo->prepare("SELECT email FROM users WHERE is_admin = ?");
         $stmt->execute([1]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result ? $result['email'] : null;

@@ -19,6 +19,23 @@ class BaseController {
         $this->mailer = new PHPMailer(true);
     }
 
+    protected function loadModel($modelName) {
+        // Path to the model file
+        $modelFile = __DIR__ . "/../models/{$modelName}.php";
+        
+        // Check if file exists and include it
+        if (file_exists($modelFile)) {
+            require_once $modelFile;
+            
+            // Create and return a new instance of the model
+            if (class_exists($modelName)) {
+                return new $modelName($this->pdo);
+            }
+        }
+        
+        return null;
+    }
+
     protected function view($view, $data = []) {
         extract($data);
         ob_start();
@@ -41,26 +58,21 @@ class BaseController {
         return isset($_SESSION['user_id']);
     }
 
-    protected function setSnackbar($message, $type) {
+    public function setSnackbar($message, $type) {
         $_SESSION['snackbar_message'] = $message;
         $_SESSION['snackbar_type'] = $type;
     }
     
-    protected function uploadImage($file_key, $folder, $public_id = null) {
+    protected function uploadImage($file_key, $folder) {
         try {
             if (!isset($_FILES[$file_key]) || $_FILES[$file_key]['error'] != 0) {
                 return null;
             }
-            
             $upload = new UploadApi();
-            $options = ['folder' => $folder];
-            
-            if ($public_id) {
-                $options['public_id'] = $public_id;
-            } else {
-                $options['public_id'] = time() . '_' . basename($_FILES[$file_key]['name']);
-            }
-            
+            $options = [
+                'folder' => $folder,
+                'public_id' => time() . '_' . basename($_FILES['image']['name'])
+            ];
             $result = $upload->upload($_FILES[$file_key]['tmp_name'], $options);
             return $result['secure_url'];
         } catch (\Exception $e) {
