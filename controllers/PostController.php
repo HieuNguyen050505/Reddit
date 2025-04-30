@@ -26,7 +26,7 @@ class PostController extends BaseController {
             if (empty($title)) {
                 $this->setSnackbar('Post title is required', 'error');
             } elseif (strlen($title) > 300) {
-                $this->setSnackbar('Post title must be 300 characters or less', 'error');
+                $this->setSnackbar('Title must not exceed 300 characters', 'error');
             } elseif (empty($module_id) || !$this->moduleModel->findById($module_id)) {
                 $this->setSnackbar('Please select a valid module', 'error');
             } else {

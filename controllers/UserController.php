@@ -93,10 +93,10 @@ class UserController extends BaseController {
         }
         if ($this->userModel->delete($id)) {
             if ($id == $_SESSION['user_id']) {
-                setcookie('user_id', '', time() - 3600, '/');
-                session_destroy();
+                $this->setSnackbar('Unable to delete admin account', 'error');
+            } else {
+                $this->setSnackbar('User deleted successfully!', 'success');
             }
-            $this->setSnackbar('User deleted successfully!', 'success');
         } else {
             $this->setSnackbar('Unable to delete user.', 'error');
         }

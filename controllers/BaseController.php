@@ -111,7 +111,9 @@ class BaseController {
             $this->mailer->send();
             return true;
         } catch (Exception $e) {
-            $this->setSnackbar("Failed to send email" , "error");
+            error_log("PHPMailer configuration failed: " . $e->getMessage());
+            http_response_code(500);
+            exit('Internal Server Error: Unable to configure PHPMailer');
         }
     }
 }
