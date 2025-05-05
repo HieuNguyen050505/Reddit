@@ -2,39 +2,17 @@
 // Set default timezone to UTC
 date_default_timezone_set('UTC');
 
-// Start session
 session_start();
 require_once 'vendor/autoload.php';
-
-// Load database connection
 require_once 'database.php';
 require_once 'cloudinary.php';
 
-// Check session timeout
-function checkSessionTimeout($pdo) {
-    if (isset($_SESSION['user_id'])) {
-        // Check if user_id cookie exists
-        if (!isset($_COOKIE['user_id'])) {
-            // Cookie has expired, log the user out
-            require_once __DIR__ . '/../controllers/AuthController.php';
-            $authController = new AuthController($pdo);
-            $authController->logout();
-            exit();
-        }
-    }
-}
-
-// Function to render 404 page
 function render404Page() {
     http_response_code(404);
     include __DIR__ . '/../views/errors/404.php';
     exit();
 }
 
-// Run session timeout check
-checkSessionTimeout($pdo);
-
-// Load routes
 $routes = require_once 'routes.php';
 
 // Process the request and load the appropriate controller
@@ -47,7 +25,6 @@ function processRequest($pdo, $routes) {
     }
     $uri = trim($uri, '/');
 
-    // Default values
     $controller = null;
     $action = null;
     $method_params = [];
@@ -86,6 +63,7 @@ function processRequest($pdo, $routes) {
         require_once __DIR__ . "/../middleware/{$middlewareClass}.php";
         $middleware = new $middlewareClass();
         $middleware->handle();
+        $middleware->checkSessionTimeout($pdo);
     }
 
     // Load the controller
@@ -102,3 +80,6 @@ function processRequest($pdo, $routes) {
         render404Page();
     }
 }
+
+// Process the request
+processRequest($pdo, $routes);
